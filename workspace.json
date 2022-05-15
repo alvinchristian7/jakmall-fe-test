@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "jakmall": "apps/jakmall",
+    "jakmall-e2e": "apps/jakmall-e2e"
+  }
+}
