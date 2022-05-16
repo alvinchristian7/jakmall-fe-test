@@ -6,9 +6,7 @@ import Button from 'components/Inputs/Button'
 const InputOption = styled.div`
   display: flex;
   justify-content: space-between;
-  & hiddenSymbol {
-    display: none;
-  }
+  
   & * {
     transition: all .3s ease;
   }
@@ -21,6 +19,9 @@ const InputOption = styled.div`
     min-width: 200px;
     min-height: 72px;
     border-radius: 3px;
+    & .hiddenSymbol {
+      display: none;
+    }
     & input[type="checkbox"]:not(:checked) + div:hover {
       background: ${props => props.theme.bgColor.greyBorder};
     }
