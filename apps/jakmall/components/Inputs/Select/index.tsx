@@ -6,6 +6,9 @@ import Button from 'components/Inputs/Button'
 const InputOption = styled.div`
   display: flex;
   justify-content: space-between;
+  & hiddenSymbol {
+    display: none;
+  }
   & * {
     transition: all .3s ease;
   }
@@ -51,7 +54,7 @@ const OrangeText = styled.div`
 const TextField = React.forwardRef(({ label, options = [], fieldState: { invalid, isTouched, isDirty, error }, ...rest }: any, ref) => {
   const isValidObj = useMemo(() => isTouched || rest.value != null && !invalid ? {
     valid: true,
-    symbol: (isSelected) => (<span className={cn("material-symbols-outlined", { 'hidden': !isSelected })}>
+    symbol: (isSelected) => (<span className={cn("material-symbols-outlined", { 'hiddenSymbol': !isSelected })}>
       check
     </span>),
   } : {
