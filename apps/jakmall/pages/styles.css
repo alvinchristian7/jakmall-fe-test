@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.centerPosition {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
