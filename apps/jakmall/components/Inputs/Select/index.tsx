@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import styled, { css } from 'styled-components'
 import cn from 'classnames'
-import Button from 'components/Inputs/Button'
 
 const InputOption = styled.div`
   display: flex;
@@ -53,7 +52,7 @@ const OrangeText = styled.div`
   color: ${props => props.theme.bgColor.main};
 `
 const TextField = React.forwardRef(({ label, options = [], fieldState: { invalid, isTouched, isDirty, error }, ...rest }: any, ref) => {
-  const isValidObj = useMemo(() => isTouched || rest.value != null && !invalid ? {
+  const isValidObj = useMemo(() => isTouched || rest.value || error != null && !invalid ? {
     valid: true,
     symbol: (isSelected) => (<span className={cn("material-symbols-outlined", { 'hiddenSymbol': !isSelected })}>
       check
@@ -61,7 +60,7 @@ const TextField = React.forwardRef(({ label, options = [], fieldState: { invalid
   } : {
     valid: false,
     symbol: () => null,
-  }, [isTouched, rest.value, invalid])
+  }, [isTouched, rest.value, invalid, error])
   
   return (
     <div>
@@ -84,6 +83,7 @@ const TextField = React.forwardRef(({ label, options = [], fieldState: { invalid
           </label>
         ))}
       </InputOption>
+      <p className='m-3 dark-orange'>{error?.message}</p>
     </div>
   )
 })

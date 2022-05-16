@@ -77,7 +77,7 @@ const InputText = styled.div`
 const maxLength = 120
 
 const TextField = React.forwardRef(({ label, width, fieldState: { invalid, isTouched, isDirty, error }, ...props }: any, ref) => {
-  const isValidOrNot = useMemo(() => isTouched || props.value ? (invalid ? {
+  const isValidOrNot = useMemo(() => isTouched || props.value || error ? ((invalid || error) ? {
     className: 'invalid', symbol: <span className="absolute right-0 mr-3 material-symbols-outlined">
       close
     </span>
@@ -85,15 +85,18 @@ const TextField = React.forwardRef(({ label, width, fieldState: { invalid, isTou
     className: 'valid', symbol: <span className="absolute right-0 mr-3 material-symbols-outlined">
       check
     </span>
-  }) : { symbol: null }, [isTouched, props.value, invalid])
+  }) : { symbol: null }, [isTouched, props.value, invalid, error])
 
   return (
+    <div>
     <InputText width={width} className={cn('flex relative', isValidOrNot.className)}>
       <label className='absolute'>{label}</label>
       <textarea cols={30} rows={4} maxLength={maxLength} {...props} ref={ref} />
       {isValidOrNot.symbol}
       <span className='counter'>{maxLength - props.value.length}</span>
     </InputText>
+    <p className='dark-orange'>{error?.message}</p>
+    </div>
   )
 })
 

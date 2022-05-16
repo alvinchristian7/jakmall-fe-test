@@ -6,7 +6,8 @@ const InputText = styled.div`
   &.valid, &:focus-within {
     & label {
       color: ${props => props.theme.bgColor.green};
-      transform: translate(0px, -12px) scale(.85);
+      transform-origin: top left;
+      transform: translate(2px, -12px) scale(.85);
     }
     & input {
       border-color: ${props => props.theme.bgColor.green};
@@ -18,7 +19,8 @@ const InputText = styled.div`
   &.invalid {
     & label {
       color: ${props => props.theme.bgColor.orange};
-      transform: translate(0px, -12px) scale(.85);
+      transform-origin: top left;
+      transform: translate(2px, -12px) scale(.85);
     }
     & input {
       border-color: ${props => props.theme.bgColor.orange};
@@ -51,7 +53,7 @@ const InputText = styled.div`
 `
 
 const TextField = React.forwardRef(({ label, width, fieldState: { invalid, isTouched, isDirty, error }, ...props }: any, ref) => {
-  const isValidOrNot = useMemo(() => isTouched || props.value ? (invalid ? {
+  const isValidOrNot = useMemo(() => isTouched || props.value || error ? (invalid ? {
     className: 'invalid', symbol: <span className="absolute right-0 mr-3 material-symbols-outlined">
       close
     </span>
@@ -59,14 +61,17 @@ const TextField = React.forwardRef(({ label, width, fieldState: { invalid, isTou
     className: 'valid', symbol: <span className="absolute right-0 mr-3 material-symbols-outlined">
       check
     </span>
-  }) : { symbol: null }, [isTouched, props.value, invalid])
+  }) : { symbol: null }, [isTouched, props.value, invalid, error])
 
   return (
-    <InputText width={width} className={cn('flex items-center relative', isValidOrNot.className)}>
-      <label className='absolute'>{label}</label>
-      <input type="text" {...props} ref={ref} />
-      {isValidOrNot.symbol}
-    </InputText>
+    <div>
+      <InputText width={width} className={cn('flex items-center relative', isValidOrNot.className)}>
+        <label className='absolute'>{label}</label>
+        <input type="text" {...props} ref={ref} />
+        {isValidOrNot.symbol}
+      </InputText>
+      <p className='dark-orange'>{error?.message}</p>
+    </div>
   )
 })
 

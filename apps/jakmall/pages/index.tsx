@@ -204,7 +204,7 @@ export function Index(props) {
           progressBarStep: [true, true, false],
           backButton: <BackButton onClick={() => { router.back(); formHookShipment.reset() }} ></BackButton>,
           paymentMethodComp: null,
-          buttonText: paymentEnum[paymentSelected] ? "Pay with " + paymentEnum[paymentSelected].label : null,
+          buttonText: shipmentEnum[shipmentSelected] && paymentEnum[paymentSelected] ? "Pay with " + paymentEnum[paymentSelected].label : null,
         }
         break;
       case 'thankyou':
@@ -235,9 +235,9 @@ export function Index(props) {
         break;
     }
     return finalConf
-  }, [paperParam, paymentSelected])
+  }, [paperParam, shipmentSelected, paymentSelected])
 
-  const totalFinal = useMemo(() => props.qty * props.price + props.dropshipperFee * +isDropshipper, [props.qty, props.price, props.dropshipperFee, isDropshipper])
+  const totalFinal = useMemo(() => props.qty * props.price + props.dropshipperFee * +isDropshipper + (shipmentEnum[shipmentSelected] ? shipmentEnum[shipmentSelected].price : 0), [props.qty, props.price, props.dropshipperFee, isDropshipper, shipmentSelected])
 
   return (
     <div className={styles.page}>
